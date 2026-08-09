@@ -23,7 +23,7 @@ export type SevaDonation = {
 export const sevaDonations: SevaDonation[] = [
   {
     id: "gau-seva-shelter",
-    title: "Gau Seva & Shelter Support",
+    title: "Gau Seva",
     description: "Help provide daily fodder, medicine, and shelter care for rescued cows.",
     details:
       "This seva supports the daily care of rescued and abandoned cows through nutritious fodder, veterinary treatment, shelter maintenance, and compassionate rehabilitation. Every contribution helps create a safer, healthier home for these sacred animals.",
@@ -60,7 +60,7 @@ export const sevaDonations: SevaDonation[] = [
   },
   {
     id: "food-seva-families",
-    title: "Food Seva for Families",
+    title: "Food Distribution",
     description: "Support nourishing meal distribution for families and communities in need.",
     details:
       "Food Seva brings fresh, nourishing meals to families, children, elders, and people facing hardship. Donations help cover groceries, preparation, packing, and distribution so that a warm meal can reach more people with dignity.",
@@ -91,8 +91,8 @@ export const sevaDonations: SevaDonation[] = [
     ],
   },
   {
-    id: "community-medical-camp",
-    title: "Community Medical Camp",
+    id: "medical-camp",
+    title: "Medical Camp",
     description: "Bring essential checkups, medicines, and healthcare guidance to underserved communities.",
     details:
       "Community Medical Camps connect underserved neighborhoods with doctors, screenings, essential medicines, and practical health guidance. This appeal helps fund medical supplies, volunteer coordination, and accessible care for every visitor.",

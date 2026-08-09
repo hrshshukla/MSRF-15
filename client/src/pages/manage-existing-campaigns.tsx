@@ -47,9 +47,9 @@ function statusClasses(status: CampaignStatus) {
 
 function campaignImage(campaign: ManagedCampaign) {
   if (campaign.imageUrl) return campaign.imageUrl;
-  if (campaign.title === "Gau Seva & Shelter Support") return gauSevaImage;
-  if (campaign.title === "Food Seva for Families") return foodSevaImage;
-  if (campaign.title === "Community Medical Camp") return medicalCampImage;
+  if (campaign.title === "Gau Seva") return gauSevaImage;
+  if (campaign.title === "Food Distribution") return foodSevaImage;
+  if (campaign.title === "Medical Camp") return medicalCampImage;
   return null;
 }
 

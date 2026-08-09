@@ -9,24 +9,6 @@ export type FoundationProject = ApiProject;
 
 const featuredProjectFallbacks: FoundationProject[] = [
   {
-    id: -1,
-    title: "Gau Seva",
-    slug: "gau-seva",
-    description: "Protecting and caring for sacred cows through daily seva and shelter support.",
-    imageUrl: gauSevaImage,
-    imageFileId: null,
-    imageFilePath: null,
-    status: "completed",
-    category: "Seva",
-    beneficiariesCount: null,
-    startYear: 2024,
-    endYear: null,
-    cowsFedCount: null,
-    budgetInr: null,
-    location: null,
-    membersInvolvedCount: null,
-  },
-  {
     id: -2,
     title: "Dharmik Siksha",
     slug: "dharmik-siksha",
