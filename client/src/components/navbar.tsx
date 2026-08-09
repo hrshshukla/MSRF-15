@@ -159,7 +159,7 @@ function DesktopNavigationPill({ location }: { location: string }) {
   }, [routeIndex]);
 
   return (
-    <div className="absolute left-1/2 hidden w-[min(52vw,620px)] min-w-[520px] -translate-x-1/2 items-center gap-0 rounded-full border border-primary/25 bg-[#f1f1f1] p-1.5 backdrop-blur-md lg:flex">
+    <div className="absolute left-1/2 hidden w-[min(52vw,620px)] min-w-[520px] -translate-x-1/2 items-center gap-0 rounded-full border border-primary/25 bg-foreground/5 p-1.5 backdrop-blur-md lg:flex">
       {activeIndex >= 0 && (
         <span
           aria-hidden="true"
