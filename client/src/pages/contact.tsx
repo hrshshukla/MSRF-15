@@ -172,9 +172,23 @@ export function ContactPage() {
                     name="phone"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Phone Number (Optional)</FormLabel>
+                        <FormLabel>Phone Number</FormLabel>
                         <FormControl>
-                          <Input placeholder="+91 XXXXX XXXXX" className="h-12 bg-background" {...field} />
+                           <Input
+                          {...field}
+                          type="tel"
+                          inputMode="numeric"
+                          maxLength={10}
+                          placeholder="Enter phone number"
+                          className="h-12 bg-background"
+                          onChange={(e) => {
+                            const value = e.target.value
+                              .replace(/\D/g, "")
+                              .slice(0, 10);
+
+                            field.onChange(value);
+                          }}
+                        />
                         </FormControl>
                         <FormMessage />
                       </FormItem>

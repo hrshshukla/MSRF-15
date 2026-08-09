@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Mail, MailOpen, RefreshCw } from "lucide-react";
+import { Mail, MailOpen, RefreshCw, Trash2, Loader2 } from "lucide-react";
 import { Redirect } from "wouter";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/auth-context";
@@ -32,6 +32,7 @@ export function MessagesPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState("");
+  const [deletingIds, setDeletingIds] = useState<number[]>([]);
 
   async function loadMessages(showRefreshState = false) {
     if (!accessToken) return;
@@ -43,10 +44,14 @@ export function MessagesPage() {
       const response = await fetch(`${API}/contact/messages`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
-      const body = await readApiResponse<ContactMessage[] | { error?: string }>(response);
+      const body = await readApiResponse<ContactMessage[] | { error?: string }>(
+        response,
+      );
       if (!response.ok) {
         const errorBody = body && !Array.isArray(body) ? body : null;
-        throw new Error(getApiErrorMessage(response, errorBody, "Unable to load messages"));
+        throw new Error(
+          getApiErrorMessage(response, errorBody, "Unable to load messages"),
+        );
       }
       setMessages(Array.isArray(body) ? body : []);
       await markMessagesRead();
@@ -68,6 +73,33 @@ export function MessagesPage() {
     window.dispatchEvent(new CustomEvent("contact-messages-read"));
   }
 
+  async function deleteMessage(id: number) {
+    if (!accessToken) return;
+    
+    setError("");
+    setDeletingIds((s) => [...s, id]);
+    try {
+      const response = await fetch(`${API}/contact/messages/${id}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+
+      const body = await readApiResponse<any>(response);
+      if (!response.ok) {
+        const errorBody = body && !Array.isArray(body) ? body : null;
+        throw new Error(
+          getApiErrorMessage(response, errorBody, "Unable to delete message"),
+        );
+      }
+
+      setMessages((prev) => prev.filter((m) => m.id !== id));
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Unable to delete message");
+    } finally {
+      setDeletingIds((s) => s.filter((x) => x !== id));
+    }
+  }
+
   useEffect(() => {
     void loadMessages();
   }, [accessToken]);
@@ -82,9 +114,13 @@ export function MessagesPage() {
         <div>
           <div className="mb-2 flex items-center gap-2 text-primary">
             <Mail className="h-5 w-5" />
-            <span className="text-xs font-bold uppercase tracking-[0.18em]">Inbox</span>
+            <span className="text-xs font-bold uppercase tracking-[0.18em]">
+              Inbox
+            </span>
           </div>
-          <h2 className="font-serif text-3xl font-bold text-foreground">Messages</h2>
+          <h2 className="font-serif text-3xl font-bold text-foreground">
+            Messages
+          </h2>
           <p className="mt-2 text-sm text-muted-foreground">
             Contact form messages received from visitors and members.
           </p>
@@ -96,7 +132,9 @@ export function MessagesPage() {
           disabled={isLoading || isRefreshing}
           className="gap-2 self-start sm:self-auto"
         >
-          <RefreshCw className={`h-4 w-4 ${isRefreshing ? "animate-spin" : ""}`} />
+          <RefreshCw
+            className={`h-4 w-4 ${isRefreshing ? "animate-spin" : ""}`}
+          />
           Refresh
         </Button>
       </div>
@@ -125,27 +163,68 @@ export function MessagesPage() {
             {messages.length} {messages.length === 1 ? "message" : "messages"}
           </p>
           {messages.map((message) => (
-            <article key={message.id} className="rounded-2xl border bg-card p-5 shadow-sm">
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+            <article
+              key={message.id}
+              className="rounded-2xl border bg-card p-4 shadow-sm sm:p-5"
+            >
+              {/* Header */}
+              <div className="flex flex-col gap-4">
+                 <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground">
+                    <span
+                      className="font-semibold text-primary"
+                    >
+                      {message.name}
+                    </span>
+
+                    <span className="break-all">{message.email}</span>
+
+                    {message.phone && (
+                      <span className="break-all">{message.phone}</span>
+                    )}
+                  </div>
+                {/* Subject + Contact Details */}
                 <div className="min-w-0">
-                  <h3 className="break-words font-serif text-xl font-bold text-foreground">
+                  <h3 className="pt-4 break-words border-t font-sans text-xl font-bold text-foreground">
                     {message.subject}
                   </h3>
-                  <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-sm text-muted-foreground">
-                    <a className="font-semibold text-primary hover:underline" href={`mailto:${message.email}`}>
-                      {message.name}
-                    </a>
-                    <span className="break-all">{message.email}</span>
-                    {message.phone && <span>{message.phone}</span>}
-                  </div>
+
+                 
                 </div>
-                <time className="shrink-0 text-xs text-muted-foreground" dateTime={message.createdAt}>
-                  {formatDate(message.createdAt)}
-                </time>
-              </div>
-              <p className="mt-5 whitespace-pre-wrap border-t pt-5 text-sm leading-7 text-foreground/80">
+
+                 {/* Message */}
+              <p className=" text-sm leading-7 text-foreground/80 whitespace-pre-wrap">
                 {message.message}
               </p>
+
+                {/* Date + Delete */}
+                <div className="flex flex-wrap items-center justify-between gap-3 border-t pt-3 sm:border-t-0 sm:pt-0 sm:justify-end">
+                  <time
+                    className="text-xs text-muted-foreground"
+                    dateTime={message.createdAt}
+                  >
+                    {formatDate(message.createdAt)}
+                  </time>
+
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="destructive"
+                    disabled={deletingIds.includes(message.id)}
+                    onClick={() => void deleteMessage(message.id)}
+                    className="gap-2 cursor-pointer"
+                  >
+                    {deletingIds.includes(message.id) ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Trash2 className="h-4 w-4" />
+                    )}
+
+                    <span>Delete</span>
+                  </Button>
+                </div>
+              </div>
+
+             
             </article>
           ))}
         </div>

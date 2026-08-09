@@ -126,7 +126,7 @@ export function CampaignDonationCard({ campaign }: { campaign: CampaignDonationC
           </div>
         </div>
 
-        <Link href={campaign.donateHref} className="mt-6">
+        <Link href={campaign.donateHref} className="mt-6 cursor-pointer">
           <Button className="w-full rounded-full bg-primary text-white hover:bg-primary/90">
             Donate Now
             <Heart className="ml-2 h-4 w-4" />
@@ -159,7 +159,7 @@ export function CampaignDonationCard({ campaign }: { campaign: CampaignDonationC
           )}
         </div>
 
-        <Link href={campaign.detailsHref} className="mt-5">
+        <Link href={campaign.detailsHref} className="mt-5 cursor-pointer">
           <Button variant="outline" className="w-full rounded-full">
             See details
             <ArrowRight className="ml-2 h-4 w-4" />

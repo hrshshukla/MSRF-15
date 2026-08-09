@@ -1,11 +1,12 @@
 import { Router, type IRouter } from "../http";
-import { count, desc, isNull } from "@workspace/db";
+import { count, desc, isNull, eq } from "@workspace/db";
 import { db, contactsTable } from "@workspace/db";
 import {
   ListContactMessagesResponse,
   MarkContactMessagesReadResponse,
   SubmitContactBody,
   SubmitContactResponse,
+  ToggleFeedPostLikeParams,
 } from "../lib/api-zod";
 import { authenticate } from "../middlewares/auth";
 import { requireRole } from "../middlewares/rbac";
@@ -77,5 +78,31 @@ router.post("/contact", async (req, res): Promise<void> => {
     })
   );
 });
+
+router.delete(
+  "/contact/messages/:id",
+  authenticate,
+  requireRole("admin", "super_admin"),
+  async (req, res): Promise<void> => {
+    const parsed = ToggleFeedPostLikeParams.safeParse(req.params);
+    if (!parsed.success) {
+      res.status(400).json({ error: parsed.error.message });
+      return;
+    }
+
+    const [message] = await db
+      .select({ id: contactsTable.id })
+      .from(contactsTable)
+      .where(eq(contactsTable.id, parsed.data.id));
+
+    if (!message) {
+      res.status(404).json({ error: "Message not found" });
+      return;
+    }
+
+    await db.delete(contactsTable).where(eq(contactsTable.id, parsed.data.id));
+    res.status(204).send();
+  },
+);
 
 export default router;
