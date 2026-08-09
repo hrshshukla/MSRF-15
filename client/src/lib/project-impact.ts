@@ -8,19 +8,13 @@ export type ProjectDetailsFallback = {
   membersInvolvedCount: number;
 };
 
-export type ProjectImpactMetric =
-  | {
-      kind: "cows";
-      label: "Cows fed";
-      placeholder: string;
-      value: number | null;
-    }
-  | {
-      kind: "beneficiaries";
-      label: "Students reached" | "Meals served" | "Patients served" | "People impacted";
-      placeholder: string;
-      value: number | null;
-    };
+export type ProjectImpactMetric = {
+  kind: "beneficiaries";
+  label:
+    "Students reached" | "Meals served" | "Patients served" | "People impacted";
+  placeholder: string;
+  value: number | null;
+};
 
 export function getProjectImpactMetric(
   title: string,
@@ -28,15 +22,6 @@ export function getProjectImpactMetric(
   project?: Pick<Project, "beneficiariesCount" | "cowsFedCount">,
 ): ProjectImpactMetric {
   const normalized = `${title} ${category}`.toLowerCase();
-
-  if (/\b(gau|cow| गो|गौ)\b/.test(normalized)) {
-    return {
-      kind: "cows",
-      label: "Cows fed",
-      placeholder: "1000",
-      value: project?.cowsFedCount ?? null,
-    };
-  }
 
   if (/(education|school|student|siksha|शिक्षा|विद्यार्थ)/.test(normalized)) {
     return {
@@ -56,7 +41,11 @@ export function getProjectImpactMetric(
     };
   }
 
-  if (/(medical|health|patient|clinic|hospital|स्वास्थ्य|चिकित्सा)/.test(normalized)) {
+  if (
+    /(medical|health|patient|clinic|hospital|स्वास्थ्य|चिकित्सा)/.test(
+      normalized,
+    )
+  ) {
     return {
       kind: "beneficiaries",
       label: "Patients served",
@@ -73,7 +62,9 @@ export function getProjectImpactMetric(
   };
 }
 
-export function getProjectDetailsFallback(project: Pick<Project, "title" | "category">): ProjectDetailsFallback {
+export function getProjectDetailsFallback(
+  project: Pick<Project, "title" | "category">,
+): ProjectDetailsFallback {
   const normalized = `${project.title} ${project.category}`.toLowerCase();
 
   if (/\b(gau|cow| गो|गौ)\b/.test(normalized)) {
@@ -106,7 +97,11 @@ export function getProjectDetailsFallback(project: Pick<Project, "title" | "cate
     };
   }
 
-  if (/(medical|health|patient|clinic|hospital|स्वास्थ्य|चिकित्सा)/.test(normalized)) {
+  if (
+    /(medical|health|patient|clinic|hospital|स्वास्थ्य|चिकित्सा)/.test(
+      normalized,
+    )
+  ) {
     return {
       location: "Dewas, Madhya Pradesh",
       beneficiariesCount: 285,

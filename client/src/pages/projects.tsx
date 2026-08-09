@@ -60,17 +60,11 @@ export function ProjectsSection() {
                 
                 <div className="flex flex-col flex-1 justify-center">
                   <div className="flex items-center gap-2 mb-3">
-                    <span className={`px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest rounded flex items-center gap-1.5
-                      ${project.status === 'ongoing' ? 'bg-primary/10 text-primary' : 
-                        project.status === 'completed' ? 'bg-green-500/10 text-green-600' : 'bg-muted text-muted-foreground'}
-                    `}>
-                      <span className={`w-1.5 h-1.5 rounded-full ${
-                        project.status === 'ongoing' ? 'bg-primary animate-pulse' : 
-                        project.status === 'completed' ? 'bg-green-500' : 'bg-muted-foreground'
-                      }`} />
-                      {project.status}
+                    <span className="flex items-center gap-1.5 rounded bg-green-500/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-green-600">
+                      <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
+                      Completed
                     </span>
-                    <span className="text-xs text-muted-foreground px-2 border-l">{project.category}</span>
+                    <span className="border-l px-2 text-xs text-muted-foreground">{project.category}</span>
                   </div>
                   
                   <h3 className="font-serif text-xl font-bold mb-2 group-hover:text-primary transition-colors">

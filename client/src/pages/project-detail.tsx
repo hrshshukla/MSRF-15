@@ -83,25 +83,9 @@ export function ProjectDetail() {
             Back to all projects
           </Link>
           <div className="flex flex-wrap items-center gap-3 text-xs font-bold uppercase tracking-wider">
-            <span
-              className={`inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 ${
-                project.status === "completed"
-                  ? "bg-green-500/10 text-green-600"
-                  : project.status === "ongoing"
-                    ? "bg-primary/10 text-primary"
-                    : "bg-muted text-muted-foreground"
-              }`}
-            >
-              <span
-                className={`h-1.5 w-1.5 rounded-full ${
-                  project.status === "completed"
-                    ? "bg-green-500"
-                    : project.status === "ongoing"
-                      ? "bg-primary animate-pulse"
-                      : "bg-muted-foreground"
-                }`}
-              />
-              {project.status}
+            <span className="inline-flex items-center gap-1.5 rounded-md bg-green-500/10 px-2.5 py-1 text-green-600">
+              <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
+              Completed
             </span>
             <span className="rounded-md bg-muted px-2.5 py-1 text-muted-foreground">
               {project.category}
@@ -140,12 +124,9 @@ export function ProjectDetail() {
                 <CalendarDays className="mb-3 h-5 w-5 text-primary" />
                 <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Timeline</p>
                 <p className="mt-1 text-sm font-bold text-foreground">
-                  {project.startYear}
                   {project.endYear !== null
-                    ? ` – ${project.endYear}`
-                    : project.status === "completed"
-                      ? " – Completed"
-                      : " – Ongoing"}
+                    ? `${project.startYear} – ${project.endYear}`
+                    : `${project.startYear} – Completed`}
                 </p>
               </div>
               <div className="rounded-2xl border bg-background/70 p-4">
@@ -156,18 +137,12 @@ export function ProjectDetail() {
                 </p>
               </div>
               <div className="rounded-2xl border bg-background/70 p-4">
-                {impactMetric.kind === "cows" ? (
-                  <Beef className="mb-3 h-5 w-5 text-primary" />
-                ) : (
+                
                   <Users className="mb-3 h-5 w-5 text-primary" />
-                )}
                 <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{impactMetric.label}</p>
                 <p className="mt-1 text-sm font-bold text-foreground">
                   {formatProjectCount(
-                    impactMetric.value ??
-                      (impactMetric.kind === "cows"
-                        ? detailsFallback.cowsFedCount
-                        : detailsFallback.beneficiariesCount),
+                    project.beneficiariesCount ?? detailsFallback.beneficiariesCount,
                     "+",
                   )}
                 </p>

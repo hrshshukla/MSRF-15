@@ -50,12 +50,9 @@ type ManagedProject = {
 type ProjectFormValues = {
   title: string;
   description: string;
-  status: ProjectStatus;
-  category: string;
   beneficiariesCount: string;
   startYear: string;
   endYear: string;
-  cowsFedCount: string;
   budgetInr: string;
   location: string;
   membersInvolvedCount: string;
@@ -67,12 +64,9 @@ type ProjectFormValues = {
 const emptyForm = (): ProjectFormValues => ({
   title: "",
   description: "",
-  status: "ongoing",
-  category: "Seva",
   beneficiariesCount: "",
   startYear: String(new Date().getFullYear()),
   endYear: "",
-  cowsFedCount: "",
   budgetInr: "",
   location: "",
   membersInvolvedCount: "",
@@ -84,16 +78,12 @@ function toFormValues(project: ManagedProject): ProjectFormValues {
   return {
     title: project.title,
     description: project.description,
-    status: project.status,
-    category: project.category,
     beneficiariesCount:
       project.beneficiariesCount === null
         ? ""
         : String(project.beneficiariesCount),
     startYear: String(project.startYear),
     endYear: project.endYear === null ? "" : String(project.endYear),
-    cowsFedCount:
-      project.cowsFedCount === null ? "" : String(project.cowsFedCount),
     budgetInr: project.budgetInr === null ? "" : String(project.budgetInr),
     location: project.location ?? "",
     membersInvolvedCount:
@@ -126,7 +116,7 @@ function ProjectForm({
   );
   const [isUploadingImage, setIsUploadingImage] = useState(false);
   const [imageError, setImageError] = useState("");
-  const impactMetric = getProjectImpactMetric(form.title, form.category);
+  const impactMetric = getProjectImpactMetric(form.title, "");
 
   useEffect(() => {
     setForm(initialValues);
@@ -221,31 +211,6 @@ function ProjectForm({
           />
         </label>
         <label className="space-y-1.5">
-          <span className="text-sm font-semibold">Status</span>
-          <select
-            value={form.status}
-            onChange={(event) =>
-              setForm({ ...form, status: event.target.value as ProjectStatus })
-            }
-            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm outline-none focus-visible:ring-1 focus-visible:ring-ring"
-          >
-            <option value="ongoing">Ongoing</option>
-            <option value="planned">Planned</option>
-            <option value="completed">Completed</option>
-          </select>
-        </label>
-        <label className="space-y-1.5">
-          <span className="text-sm font-semibold">Category</span>
-          <Input
-            required
-            value={form.category}
-            onChange={(event) =>
-              setForm({ ...form, category: event.target.value })
-            }
-            placeholder="Seva"
-          />
-        </label>
-        <label className="space-y-1.5">
           <span className="text-sm font-semibold">Start year</span>
           <Input
             required
@@ -298,26 +263,6 @@ function ProjectForm({
             placeholder="Ongoing"
           />
         </label>
-        {impactMetric.kind === "cows" && (
-          <label className="space-y-1.5">
-            <span className="text-sm font-semibold">
-              Cows fed{" "}
-              <span className="font-normal text-muted-foreground">
-                (optional)
-              </span>
-            </span>
-            <Input
-              min="0"
-              step="1"
-              type="number"
-              value={form.cowsFedCount}
-              onChange={(event) =>
-                setForm({ ...form, cowsFedCount: event.target.value })
-              }
-              placeholder={impactMetric.placeholder}
-            />
-          </label>
-        )}
         <label className="space-y-1.5">
           <span className="text-sm font-semibold">
             Budget in INR{" "}
@@ -518,16 +463,12 @@ export function ManageProjectsPage() {
           body: JSON.stringify({
             title: values.title,
             description: values.description,
-            status: values.status,
-            category: values.category,
             startYear: Number(values.startYear),
             beneficiariesCount:
               values.beneficiariesCount === ""
                 ? null
                 : Number(values.beneficiariesCount),
             endYear: values.endYear === "" ? null : Number(values.endYear),
-            cowsFedCount:
-              values.cowsFedCount === "" ? null : Number(values.cowsFedCount),
             budgetInr:
               values.budgetInr === "" ? null : Number(values.budgetInr),
             location: values.location.trim() || null,
@@ -642,14 +583,11 @@ export function ManageProjectsPage() {
 
       {(isCreating || editingProject) && (
         <div className="rounded-2xl border bg-card p-5 shadow-sm sm:p-6">
-          <div className="mb-5 flex items-center justify-between gap-3 border-b pb-4">
+          <div className="mb-5 flex items-center justify-between gap-3 border-b">
             <div>
               <h3 className="font-semibold">
                 {editingProject ? "Edit project" : "Create project"}
               </h3>
-              <p className="text-sm text-muted-foreground">
-                Images are uploaded to the private projects folder in ImageKit.
-              </p>
             </div>
             <Button
               type="button"
@@ -769,8 +707,8 @@ export function ManageProjectsPage() {
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
                       <h4 className="font-semibold">{project.title}</h4>
-                      <span className="rounded-full bg-primary/10 px-2.5 py-1 text-xs font-semibold capitalize text-primary">
-                        {project.status}
+                      <span className="rounded-full bg-green-500/10 px-2.5 py-1 text-xs font-semibold text-green-600">
+                        Completed
                       </span>
                     </div>
                     <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">
