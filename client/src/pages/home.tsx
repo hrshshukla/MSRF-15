@@ -234,7 +234,7 @@ export function Home() {
           </div>
 
           <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-             {projects.slice(0, 4).map((project) => (
+             {projects.slice(0, 6).map((project) => (
                <Link
                 key={project.id}
                  href={`/projects/${project.id}`}

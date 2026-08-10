@@ -11,7 +11,6 @@ import {
 import { useLayoutEffect } from "react";
 import { Link, useParams } from "wouter";
 import { Button } from "@/components/ui/button";
-import { getFeaturedProjectFallback } from "@/lib/foundation-projects";
 import { getProjectDetailsFallback } from "@/lib/project-impact";
 
 function formatProjectBudget(value: number | null) {
@@ -32,7 +31,6 @@ function formatProjectCount(value: number | null, suffix = "") {
 export function ProjectDetail() {
   const params = useParams();
   const projectId = Number(params.id);
-  const fallbackProject = getFeaturedProjectFallback(projectId);
   const projectQuery = useGetProject(projectId, {
     query: {
       enabled: Number.isInteger(projectId) && projectId > 0,
@@ -44,8 +42,8 @@ export function ProjectDetail() {
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
   }, [projectId]);
 
-  const project = projectId > 0 ? projectQuery.data : fallbackProject;
-  const isLoading = projectId > 0 && projectQuery.isLoading;
+  const project = projectQuery.data;
+  const isLoading = projectQuery.isLoading;
   const isNotFound = !isLoading && (!project || projectQuery.isError);
 
   if (isLoading) {

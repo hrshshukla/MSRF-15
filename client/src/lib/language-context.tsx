@@ -109,8 +109,6 @@ const translations: Record<Exclude<Language, "en">, Record<string, string>> = {
       "सामूहिक प्रयासों से स्वच्छ मंदिर, मोहल्ले और सार्वजनिक स्थान बनाना।",
     "Serving nourishing meals to families, pilgrims, and communities in need.":
       "परिवारों, तीर्थयात्रियों और जरूरतमंद समुदायों को पौष्टिक भोजन देना।",
-    "Connecting underserved communities with essential health checks and care.":
-      "वंचित समुदायों को आवश्यक स्वास्थ्य जांच और देखभाल से जोड़ना।",
     "Foundation Projects": "फाउंडेशन परियोजनाएं",
     "Long-term initiatives dedicated to structural rebuilding, education, and sustained community welfare.":
       "संरचनात्मक पुनर्निर्माण, शिक्षा और निरंतर सामुदायिक कल्याण के लिए समर्पित दीर्घकालिक पहल।",
@@ -394,8 +392,6 @@ const translations: Record<Exclude<Language, "en">, Record<string, string>> = {
       "सामूहिक प्रयत्नांतून स्वच्छ मंदिरे, परिसर आणि सार्वजनिक जागा तयार करणे.",
     "Serving nourishing meals to families, pilgrims, and communities in need.":
       "कुटुंबे, यात्रेकरू आणि गरजू समुदायांना पौष्टिक भोजन देणे.",
-    "Connecting underserved communities with essential health checks and care.":
-      "वंचित समुदायांना आवश्यक आरोग्य तपासणी आणि सेवेशी जोडणे.",
     "Foundation Projects": "फाउंडेशन प्रकल्प",
     "Long-term initiatives dedicated to structural rebuilding, education, and sustained community welfare.":
       "पुनर्बांधणी, शिक्षण आणि सातत्यपूर्ण सामुदायिक कल्याणासाठी समर्पित दीर्घकालीन उपक्रम.",
