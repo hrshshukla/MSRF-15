@@ -189,7 +189,6 @@ export const ListProjectsResponseItem = zod.object({
   "beneficiariesCount": zod.number().nullable(),
   "startYear": zod.number(),
   "endYear": zod.number().nullable(),
-  "cowsFedCount": zod.number().nullable(),
   "budgetInr": zod.number().nullable(),
   "location": zod.string().nullable(),
   "membersInvolvedCount": zod.number().nullable()
@@ -217,7 +216,6 @@ export const GetProjectResponse = zod.object({
   "beneficiariesCount": zod.number().nullable(),
   "startYear": zod.number(),
   "endYear": zod.number().nullable(),
-  "cowsFedCount": zod.number().nullable(),
   "budgetInr": zod.number().nullable(),
   "location": zod.string().nullable(),
   "membersInvolvedCount": zod.number().nullable()

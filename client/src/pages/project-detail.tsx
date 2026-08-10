@@ -1,10 +1,18 @@
 import { useGetProject } from "@/lib/api-client";
-import { ArrowLeft, CalendarDays, FolderHeart, MapPin, Users, WalletCards, Beef } from "lucide-react";
+import {
+  ArrowLeft,
+  CalendarDays,
+  FolderHeart,
+  MapPin,
+  Users,
+  WalletCards,
+  Beef,
+} from "lucide-react";
 import { useLayoutEffect } from "react";
 import { Link, useParams } from "wouter";
 import { Button } from "@/components/ui/button";
 import { getFeaturedProjectFallback } from "@/lib/foundation-projects";
-import { getProjectDetailsFallback, getProjectImpactMetric } from "@/lib/project-impact";
+import { getProjectDetailsFallback } from "@/lib/project-impact";
 
 function formatProjectBudget(value: number | null) {
   if (value === null) return "Not added";
@@ -16,7 +24,9 @@ function formatProjectBudget(value: number | null) {
 }
 
 function formatProjectCount(value: number | null, suffix = "") {
-  return value === null ? "Not added" : `${value.toLocaleString("en-IN")}${suffix}`;
+  return value === null
+    ? "Not added"
+    : `${value.toLocaleString("en-IN")}${suffix}`;
 }
 
 export function ProjectDetail() {
@@ -68,7 +78,6 @@ export function ProjectDetail() {
     return null;
   }
 
-  const impactMetric = getProjectImpactMetric(project.title, project.category, project);
   const detailsFallback = getProjectDetailsFallback(project);
 
   return (
@@ -122,7 +131,9 @@ export function ProjectDetail() {
             <div className="grid grid-cols-2 gap-3 border-t pt-5">
               <div className="rounded-2xl border bg-background/70 p-4">
                 <CalendarDays className="mb-3 h-5 w-5 text-primary" />
-                <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Timeline</p>
+                <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                  Timeline
+                </p>
                 <p className="mt-1 text-sm font-bold text-foreground">
                   {project.endYear !== null
                     ? `${project.startYear} – ${project.endYear}`
@@ -131,46 +142,49 @@ export function ProjectDetail() {
               </div>
               <div className="rounded-2xl border bg-background/70 p-4">
                 <MapPin className="mb-3 h-5 w-5 text-primary" />
-                <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Location</p>
+                <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                  Location
+                </p>
                 <p className="mt-1 text-sm font-bold text-foreground">
                   {project.location ?? detailsFallback.location}
                 </p>
               </div>
+
               <div className="rounded-2xl border bg-background/70 p-4">
-                
-                  <Users className="mb-3 h-5 w-5 text-primary" />
-                <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{impactMetric.label}</p>
+                <Users className="mb-3 h-5 w-5 text-primary" />
+                <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                  Members involved
+                </p>
                 <p className="mt-1 text-sm font-bold text-foreground">
                   {formatProjectCount(
-                    project.beneficiariesCount ?? detailsFallback.beneficiariesCount,
-                    "+",
+                    project.membersInvolvedCount ??
+                      detailsFallback.membersInvolvedCount,
                   )}
                 </p>
               </div>
               <div className="rounded-2xl border bg-background/70 p-4">
-                <WalletCards className="mb-3 h-5 w-5 text-primary" />
-                <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Project budget</p>
-                <p className="mt-1 text-sm font-bold text-foreground">
-                  {formatProjectBudget(project.budgetInr ?? detailsFallback.budgetInr)}
-                </p>
-              </div>
-              <div className="rounded-2xl border bg-background/70 p-4">
                 <Users className="mb-3 h-5 w-5 text-primary" />
-                <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Members involved</p>
-                <p className="mt-1 text-sm font-bold text-foreground">
-                  {formatProjectCount(project.membersInvolvedCount ?? detailsFallback.membersInvolvedCount)}
+                <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                  People impacted
                 </p>
-              </div>
-              <div className="rounded-2xl border bg-background/70 p-4">
-                <Users className="mb-3 h-5 w-5 text-primary" />
-                <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">People impacted</p>
                 <p className="mt-1 text-sm font-bold text-foreground">
                   {formatProjectCount(
-                    project.beneficiariesCount ?? detailsFallback.beneficiariesCount,
+                    project.beneficiariesCount ??
+                      detailsFallback.beneficiariesCount,
                     "+",
                   )}
                 </p>
               </div>
+            </div>
+            <div className="rounded-2xl border bg-background/70 p-4">
+              <p className="text-xs flex gap-2 align-center font-semibold uppercase tracking-wide text-muted-foreground">
+                  <WalletCards className="mb-3 h-5 w-5 text-primary" /> <span className="mt-0.5">Project budget</span>
+              </p>
+              <p className=" text-lg font-bold text-foreground">
+                {formatProjectBudget(
+                  project.budgetInr ?? detailsFallback.budgetInr,
+                )}
+              </p>
             </div>
             <Link href="/seva#foundation-projects" className="block pt-2">
               <Button className="w-full rounded-full">

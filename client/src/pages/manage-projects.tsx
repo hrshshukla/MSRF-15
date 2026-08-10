@@ -225,7 +225,7 @@ function ProjectForm({
         </label>
         <label className="space-y-1.5">
           <span className="text-sm font-semibold">
-            {impactMetric.label}{" "}
+            Beneficiaries
             <span className="font-normal text-muted-foreground">
               (optional)
             </span>

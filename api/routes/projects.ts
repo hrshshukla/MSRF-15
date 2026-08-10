@@ -103,7 +103,6 @@ router.post(
       ? null
       : Number(body.beneficiariesCount);
     const endYear = readOptionalCount(body.endYear);
-    const cowsFedCount = readOptionalCount(body.cowsFedCount);
     const budgetInr = readOptionalCount(body.budgetInr);
     const location = normalizeOptionalText(body.location);
     const membersInvolvedCount = readOptionalCount(body.membersInvolvedCount);
@@ -145,7 +144,6 @@ router.post(
       beneficiariesCount,
       startYear,
       endYear,
-      cowsFedCount,
       budgetInr,
       location,
       membersInvolvedCount,
@@ -207,7 +205,6 @@ router.patch(
         ? null
         : Number(body.beneficiariesCount);
     const endYear = body.endYear === undefined ? existing.endYear : readOptionalCount(body.endYear);
-    const cowsFedCount = body.cowsFedCount === undefined ? existing.cowsFedCount : readOptionalCount(body.cowsFedCount);
     const budgetInr = body.budgetInr === undefined ? existing.budgetInr : readOptionalCount(body.budgetInr);
     const location = body.location === undefined ? existing.location : normalizeOptionalText(body.location);
     const membersInvolvedCount = body.membersInvolvedCount === undefined
@@ -248,7 +245,6 @@ router.patch(
       startYear,
       beneficiariesCount,
       endYear,
-      cowsFedCount,
       budgetInr,
       location,
       membersInvolvedCount,
@@ -311,7 +307,6 @@ router.get("/projects", async (_req, res): Promise<void> => {
         beneficiariesCount: r.beneficiariesCount ?? null,
         imageUrl: r.imageUrl ?? null,
         endYear: r.endYear ?? null,
-        cowsFedCount: r.cowsFedCount ?? null,
         budgetInr: r.budgetInr ?? null,
         location: r.location ?? null,
         membersInvolvedCount: r.membersInvolvedCount ?? null,
@@ -344,7 +339,6 @@ router.get("/projects/:id", async (req, res): Promise<void> => {
       beneficiariesCount: project.beneficiariesCount ?? null,
       imageUrl: project.imageUrl ?? null,
       endYear: project.endYear ?? null,
-      cowsFedCount: project.cowsFedCount ?? null,
       budgetInr: project.budgetInr ?? null,
       location: project.location ?? null,
       membersInvolvedCount: project.membersInvolvedCount ?? null,

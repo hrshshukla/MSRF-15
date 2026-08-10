@@ -3,15 +3,12 @@ import type { Project } from "@/lib/api-client";
 export type ProjectDetailsFallback = {
   location: string;
   beneficiariesCount: number;
-  cowsFedCount: number;
   budgetInr: number;
   membersInvolvedCount: number;
 };
 
 export type ProjectImpactMetric = {
   kind: "beneficiaries";
-  label:
-    "Students reached" | "Meals served" | "Patients served" | "People impacted";
   placeholder: string;
   value: number | null;
 };
@@ -26,7 +23,6 @@ export function getProjectImpactMetric(
   if (/(education|school|student|siksha|शिक्षा|विद्यार्थ)/.test(normalized)) {
     return {
       kind: "beneficiaries",
-      label: "Students reached",
       placeholder: "500",
       value: project?.beneficiariesCount ?? null,
     };
@@ -35,7 +31,6 @@ export function getProjectImpactMetric(
   if (/(food|meal|anna|bhojan| भोजन|अन्न)/.test(normalized)) {
     return {
       kind: "beneficiaries",
-      label: "Meals served",
       placeholder: "1000",
       value: project?.beneficiariesCount ?? null,
     };
@@ -48,7 +43,6 @@ export function getProjectImpactMetric(
   ) {
     return {
       kind: "beneficiaries",
-      label: "Patients served",
       placeholder: "250",
       value: project?.beneficiariesCount ?? null,
     };
@@ -56,7 +50,6 @@ export function getProjectImpactMetric(
 
   return {
     kind: "beneficiaries",
-    label: "People impacted",
     placeholder: "500",
     value: project?.beneficiariesCount ?? null,
   };

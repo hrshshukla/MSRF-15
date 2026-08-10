@@ -15,7 +15,6 @@ export const projectsTable = pgTable("projects", {
   beneficiariesCount: integer("beneficiaries_count"),
   startYear: integer("start_year").notNull(),
   endYear: integer("end_year"),
-  cowsFedCount: integer("cows_fed_count"),
   budgetInr: integer("budget_inr"),
   location: text("location"),
   membersInvolvedCount: integer("members_involved_count"),

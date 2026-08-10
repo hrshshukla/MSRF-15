@@ -26,8 +26,6 @@ export interface Project {
   /** @nullable */
   endYear: number | null;
   /** @nullable */
-  cowsFedCount: number | null;
-  /** @nullable */
   budgetInr: number | null;
   /** @nullable */
   location: string | null;
