@@ -226,9 +226,7 @@ function ProjectForm({
         <label className="space-y-1.5">
           <span className="text-sm font-semibold">
             Beneficiaries
-            <span className="font-normal text-muted-foreground">
-              (optional)
-            </span>
+             
           </span>
           <Input
             min="0"
@@ -244,9 +242,7 @@ function ProjectForm({
         <label className="space-y-1.5">
           <span className="text-sm font-semibold">
             End year{" "}
-            <span className="font-normal text-muted-foreground">
-              (optional)
-            </span>
+             
           </span>
           <Input
             min="1900"
@@ -262,9 +258,7 @@ function ProjectForm({
         <label className="space-y-1.5">
           <span className="text-sm font-semibold">
             Budget in INR{" "}
-            <span className="font-normal text-muted-foreground">
-              (optional)
-            </span>
+             
           </span>
           <Input
             min="0"
@@ -280,9 +274,7 @@ function ProjectForm({
         <label className="space-y-1.5">
           <span className="text-sm font-semibold">
             Location{" "}
-            <span className="font-normal text-muted-foreground">
-              (optional)
-            </span>
+             
           </span>
           <Input
             maxLength={160}
@@ -296,9 +288,7 @@ function ProjectForm({
         <label className="space-y-1.5">
           <span className="text-sm font-semibold">
             Members involved{" "}
-            <span className="font-normal text-muted-foreground">
-              (optional)
-            </span>
+             
           </span>
           <Input
             min="0"
@@ -314,9 +304,7 @@ function ProjectForm({
         <div className="space-y-1.5 md:col-span-2">
           <span className="text-sm font-semibold">
             Project image{" "}
-            <span className="font-normal text-muted-foreground">
-              (optional)
-            </span>
+             
           </span>
           <div className="flex flex-wrap items-center gap-3 rounded-xl border border-dashed bg-muted/20 p-3">
             {imagePreview ? (
