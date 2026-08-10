@@ -225,9 +225,7 @@ function ProjectForm({
         </label>
         <label className="space-y-1.5">
           <span className="text-sm font-semibold">
-            {impactMetric.kind === "cows"
-              ? "People impacted"
-              : impactMetric.label}{" "}
+            {impactMetric.label}{" "}
             <span className="font-normal text-muted-foreground">
               (optional)
             </span>
@@ -240,9 +238,7 @@ function ProjectForm({
             onChange={(event) =>
               setForm({ ...form, beneficiariesCount: event.target.value })
             }
-            placeholder={
-              impactMetric.kind === "cows" ? "500" : impactMetric.placeholder
-            }
+            placeholder={impactMetric.placeholder}
           />
         </label>
         <label className="space-y-1.5">
