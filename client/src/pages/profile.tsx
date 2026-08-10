@@ -141,11 +141,11 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-[70vh] bg-gradient-to-br from-orange-50/70 via-background to-amber-50/50 px-4 py-7 sm:py-9">
+    <div className="min-h-[70vh] bg-gradient-to-br from-orange-50/70 via-background to-amber-50/50 px-4 py-7 lg:pt-0  sm:py-9">
       <motion.div
         initial={{ opacity: 0, y: 18 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mx-auto max-w-2xl"
+        className="mx-auto max-w-full"
       >
         <div className="mb-5">
           <div>
@@ -327,3 +327,4 @@ export default function ProfilePage() {
     </div>
   );
 }
+
