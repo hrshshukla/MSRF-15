@@ -62,7 +62,7 @@ export function Home() {
             </h1>
             
             <p className="text-lg md:text-xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
-              Mahakal Sanatan Raksha Foundation runs active campaigns, dharmic events, and community projects to strengthen cultural roots and serve those in need.
+              Mahakal Sanatan Raksha Foundation runs active campaigns and community projects to strengthen cultural roots and serve those in need.
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300">

@@ -1,6 +1,5 @@
 import { CampaignsSection } from "@/pages/campaigns";
 import { ProjectsSection } from "@/pages/projects";
-import { EventsSection } from "@/pages/events";
 import { useEffect } from "react";
 import { useLocation } from "wouter";
 
@@ -43,7 +42,6 @@ export function SevaPage() {
             {[
               ["#campaigns", "Campaigns"],
               ["#foundation-projects", "Projects"],
-              ["#events", "Events"],
             ].map(([href, label]) => (
               <a
                 key={href}
@@ -59,7 +57,6 @@ export function SevaPage() {
       <main>
         <CampaignsSection />
         <ProjectsSection />
-        <EventsSection />
       </main>
     </div>
   );
