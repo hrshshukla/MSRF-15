@@ -16,7 +16,7 @@ export type ProjectImpactMetric = {
 export function getProjectImpactMetric(
   title: string,
   category: string,
-  project?: Pick<Project, "beneficiariesCount" | "cowsFedCount">,
+  project?: Pick<Project, "beneficiariesCount">,
 ): ProjectImpactMetric {
   const normalized = `${title} ${category}`.toLowerCase();
 
@@ -64,7 +64,6 @@ export function getProjectDetailsFallback(
     return {
       location: "Ujjain, Madhya Pradesh",
       beneficiariesCount: 180,
-      cowsFedCount: 1250,
       budgetInr: 325000,
       membersInvolvedCount: 24,
     };
@@ -74,7 +73,6 @@ export function getProjectDetailsFallback(
     return {
       location: "Ujjain, Madhya Pradesh",
       beneficiariesCount: 520,
-      cowsFedCount: 0,
       budgetInr: 275000,
       membersInvolvedCount: 31,
     };
@@ -84,7 +82,6 @@ export function getProjectDetailsFallback(
     return {
       location: "Indore, Madhya Pradesh",
       beneficiariesCount: 1450,
-      cowsFedCount: 0,
       budgetInr: 210000,
       membersInvolvedCount: 38,
     };
@@ -98,7 +95,6 @@ export function getProjectDetailsFallback(
     return {
       location: "Dewas, Madhya Pradesh",
       beneficiariesCount: 285,
-      cowsFedCount: 0,
       budgetInr: 390000,
       membersInvolvedCount: 19,
     };
@@ -108,7 +104,6 @@ export function getProjectDetailsFallback(
     return {
       location: "Ujjain, Madhya Pradesh",
       beneficiariesCount: 760,
-      cowsFedCount: 0,
       budgetInr: 185000,
       membersInvolvedCount: 42,
     };
@@ -117,7 +112,6 @@ export function getProjectDetailsFallback(
   return {
     location: "Ujjain, Madhya Pradesh",
     beneficiariesCount: 500,
-    cowsFedCount: 0,
     budgetInr: 250000,
     membersInvolvedCount: 28,
   };

@@ -123,7 +123,7 @@ router.post(
       res.status(400).json({ error: "Beneficiaries must be a non-negative whole number." });
       return;
     }
-    if (!isValidOptionalCount(endYear) || !isValidOptionalCount(cowsFedCount) || !isValidOptionalCount(budgetInr) || !isValidOptionalCount(membersInvolvedCount)) {
+    if (!isValidOptionalCount(endYear) || !isValidOptionalCount(budgetInr) || !isValidOptionalCount(membersInvolvedCount)) {
       res.status(400).json({ error: "Project metrics must be non-negative whole numbers." });
       return;
     }
@@ -227,7 +227,7 @@ router.patch(
       res.status(400).json({ error: "Beneficiaries must be a non-negative whole number." });
       return;
     }
-    if (!isValidOptionalCount(endYear) || !isValidOptionalCount(cowsFedCount) || !isValidOptionalCount(budgetInr) || !isValidOptionalCount(membersInvolvedCount)) {
+    if (!isValidOptionalCount(endYear) || !isValidOptionalCount(budgetInr) || !isValidOptionalCount(membersInvolvedCount)) {
       res.status(400).json({ error: "Project metrics must be non-negative whole numbers." });
       return;
     }
