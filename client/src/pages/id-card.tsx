@@ -54,13 +54,19 @@ export function IdCardPage() {
         onclone: (clonedDocument) => {
           // The PDF card uses fixed inline styles. Remove generated stylesheets
           // so html2canvas does not need to parse unsupported color functions.
-          clonedDocument.querySelectorAll("style, link[rel='stylesheet']").forEach((styleSheet) => {
-            styleSheet.remove();
-          });
+          clonedDocument
+            .querySelectorAll("style, link[rel='stylesheet']")
+            .forEach((styleSheet) => {
+              styleSheet.remove();
+            });
         },
       });
 
-      const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+      const pdf = new jsPDF({
+        orientation: "portrait",
+        unit: "mm",
+        format: "a4",
+      });
       const pageWidth = 210;
       const pageHeight = 297;
       const margin = 14;
@@ -100,13 +106,31 @@ export function IdCardPage() {
 
   return (
     <section className="rounded-2xl border bg-card p-4 shadow-sm sm:p-6">
-      <div className="mb-5 flex items-start justify-between gap-4 border-b pb-4">
+      <div className=" flex items-start justify-between gap-4 border-b pb-4">
         <div>
-          <p className="text-xs font-medium uppercase tracking-wider text-primary">Membership</p>
+          <p className="text-xs flex gap-1 items-center font-medium uppercase tracking-wider text-primary">
+            <IdCard className="mt-1 h-5 w-5 text-primary" />
+            <span className="ml-1 mt-0.5"> Membership</span>
+          </p>
           <h2 className="mt-1 font-serif text-2xl font-bold">ID card</h2>
-          <p className="mt-1 text-sm text-muted-foreground">Your digital foundation identity card with a scannable member QR code.</p>
         </div>
-        <IdCard className="mt-1 h-5 w-5 text-primary" />
+        <div className="flex-col items-end justify-end gap-2">
+          <div className="mt-5 flex justify-center">
+            <Button
+              type="button"
+              onClick={() => void downloadPdf()}
+              disabled={isDownloading}
+              className="cursor-pointer"
+            >
+              {isDownloading ? (
+                <Loader2 className="animate-spin" />
+              ) : (
+                <Download />
+              )}
+              {isDownloading ? "Preparing PDF…" : "Download ID Card"}
+            </Button>
+          </div>
+        </div>
       </div>
 
       <ResponsiveIdCard user={user} qrRef={visibleQrRef} />
@@ -123,18 +147,6 @@ export function IdCardPage() {
         }}
       >
         <IdCardPdf ref={pdfCardRef} user={user} qrRef={pdfQrRef} />
-      </div>
-
-      <div className="mt-5 flex justify-center">
-        <Button
-          type="button"
-          onClick={() => void downloadPdf()}
-          disabled={isDownloading}
-          className="cursor-pointer"
-        >
-          {isDownloading ? <Loader2 className="animate-spin" /> : <Download />}
-          {isDownloading ? "Preparing PDF…" : "Download ID Card"}
-        </Button>
       </div>
     </section>
   );

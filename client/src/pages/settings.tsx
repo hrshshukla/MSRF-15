@@ -23,7 +23,10 @@ import { AccountDashboardPage } from "@/pages/account-dashboard";
 import { UpdatePasswordPage } from "@/pages/update-password";
 import { IdCardPage } from "@/pages/id-card";
 import { ManageVolunteersPage } from "@/pages/manage-volunteers";
-import { ManageMembersPage, ManageMemberAccountsPage } from "@/pages/manage-members";
+import {
+  ManageMembersPage,
+  ManageMemberAccountsPage,
+} from "@/pages/manage-members";
 import { CampaignAdministrationPage } from "@/pages/campaign-administration";
 import { CreateCampaignPage } from "@/pages/create-campaign";
 import { ManageExistingCampaignsPage } from "@/pages/manage-existing-campaigns";
@@ -31,10 +34,7 @@ import { ManageProjectsPage } from "@/pages/manage-projects";
 import { MessagesPage } from "@/pages/messages";
 import { ManageBadgesPage } from "@/pages/manage-badges";
 
-const adminRoles = [
-  "super_admin",
-  "admin",
-] as const;
+const adminRoles = ["super_admin", "admin"] as const;
 
 const memberSettingsLinks = [
   { href: "/settings/profile", label: "Edit profile", icon: UserRound },
@@ -62,7 +62,8 @@ export function SettingsPage() {
   const isSuperUser = user.role === "super_admin";
   const isSettingsHome = location === "/settings";
   const isAccountListPage =
-    location === "/settings/members/members" || location === "/settings/members/admins";
+    location === "/settings/members/members" ||
+    location === "/settings/members/admins";
   const isAdminContentPage =
     location === "/settings/campaigns/create" ||
     location === "/settings/campaigns/manage" ||
@@ -78,20 +79,26 @@ export function SettingsPage() {
 
     let cancelled = false;
     async function loadUnreadMessageCount() {
-      const response = await fetch(`${import.meta.env.BASE_URL?.replace(/\/$/, "") ?? ""}/api/contact/messages/unread-count`, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
+      const response = await fetch(
+        `${import.meta.env.BASE_URL?.replace(/\/$/, "") ?? ""}/api/contact/messages/unread-count`,
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        },
+      );
       if (!response.ok || cancelled) return;
-      const body = await response.json() as { count?: number };
+      const body = (await response.json()) as { count?: number };
       if (typeof body.count === "number") setUnreadMessageCount(body.count);
     }
 
     async function loadUnreadVolunteerCount() {
-      const response = await fetch(`${import.meta.env.BASE_URL?.replace(/\/$/, "") ?? ""}/api/volunteer-applications/unread-count`, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
+      const response = await fetch(
+        `${import.meta.env.BASE_URL?.replace(/\/$/, "") ?? ""}/api/volunteer-applications/unread-count`,
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        },
+      );
       if (!response.ok || cancelled) return;
-      const body = await response.json() as { count?: number };
+      const body = (await response.json()) as { count?: number };
       if (typeof body.count === "number") setUnreadVolunteerCount(body.count);
     }
 
@@ -104,26 +111,59 @@ export function SettingsPage() {
 
     void loadUnreadMessageCount();
     void loadUnreadVolunteerCount();
-    const interval = window.setInterval(() => void loadUnreadMessageCount(), 30_000);
+    const interval = window.setInterval(
+      () => void loadUnreadMessageCount(),
+      30_000,
+    );
     window.addEventListener("contact-messages-read", handleMessagesRead);
-    window.addEventListener("volunteer-applications-read", handleVolunteerApplicationsRead);
+    window.addEventListener(
+      "volunteer-applications-read",
+      handleVolunteerApplicationsRead,
+    );
     return () => {
       cancelled = true;
       window.clearInterval(interval);
       window.removeEventListener("contact-messages-read", handleMessagesRead);
-      window.removeEventListener("volunteer-applications-read", handleVolunteerApplicationsRead);
+      window.removeEventListener(
+        "volunteer-applications-read",
+        handleVolunteerApplicationsRead,
+      );
     };
   }, [accessToken, isAdmin]);
 
   const settingsLinks: SettingsLink[] = isAdmin
     ? [
         ...memberSettingsLinks,
-        { href: "/settings/volunteers", label: "Manage volunteer", icon: UserCheck, unreadCount: unreadVolunteerCount },
-        { href: "/settings/campaigns", label: "Manage campaigns", icon: Megaphone },
-        { href: "/settings/projects/manage", label: "Manage projects", icon: Image },
-        { href: "/settings/messages", label: "Messages", icon: Mail, unreadCount: unreadMessageCount },
-        { href: "/settings/members", label: isSuperUser ? "Manage accounts" : "Manage members", icon: Users },
-        ...(isSuperUser ? [{ href: "/settings/badges", label: "Custom badges", icon: Award }] : []),
+        {
+          href: "/settings/volunteers",
+          label: "Manage volunteer",
+          icon: UserCheck,
+          unreadCount: unreadVolunteerCount,
+        },
+        {
+          href: "/settings/campaigns",
+          label: "Manage campaigns",
+          icon: Megaphone,
+        },
+        {
+          href: "/settings/projects/manage",
+          label: "Manage projects",
+          icon: Image,
+        },
+        {
+          href: "/settings/messages",
+          label: "Messages",
+          icon: Mail,
+          unreadCount: unreadMessageCount,
+        },
+        {
+          href: "/settings/members",
+          label: isSuperUser ? "Manage accounts" : "Manage members",
+          icon: Users,
+        },
+        ...(isSuperUser
+          ? [{ href: "/settings/badges", label: "Custom badges", icon: Award }]
+          : []),
       ]
     : memberSettingsLinks;
 
@@ -132,13 +172,19 @@ export function SettingsPage() {
       <div className="mx-auto max-w-5xl">
         <div className="grid gap-6 lg:grid-cols-[220px_minmax(0,1fr)]">
           <div className="min-w-0">
-            <div className={`mb-6 items-center gap-3 ${isSettingsHome ? "flex" : "hidden lg:flex"}`}>
+            <div
+              className={`mb-6 items-center gap-3 ${isSettingsHome ? "flex" : "hidden lg:flex"}`}
+            >
               <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
                 <SettingsIcon className="h-5 w-5" />
               </div>
               <div>
-                <p className="text-xs font-medium uppercase tracking-wider text-primary">My account</p>
-                <h1 className="font-serif text-2xl font-bold text-foreground sm:text-3xl">Settings</h1>
+                <p className="text-xs font-medium uppercase tracking-wider text-primary">
+                  My account
+                </p>
+                <h1 className="font-serif text-2xl font-bold text-foreground sm:text-3xl">
+                  Settings
+                </h1>
               </div>
             </div>
             <nav
@@ -150,7 +196,9 @@ export function SettingsPage() {
                   key={href}
                   href={href}
                   className={`flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold transition-colors ${
-                     location === href || (href === "/settings/members" && location.startsWith("/settings/members/"))
+                    location === href ||
+                    (href === "/settings/members" &&
+                      location.startsWith("/settings/members/"))
                       ? "bg-primary text-primary-foreground"
                       : "text-foreground hover:bg-primary/5 hover:text-primary"
                   }`}
@@ -169,8 +217,9 @@ export function SettingsPage() {
               ))}
             </nav>
           </div>
-
-          <div className={`${isSettingsHome ? "hidden lg:block" : "block"} min-w-0`}>
+          <div
+            className={`${isSettingsHome ? "hidden lg:block" : "block"} min-w-0 lg:max-h-[calc(100vh-120px)] lg:overflow-y-auto lg:pr-2`}
+          >
             {!isSettingsHome && (
               <Link
                 href={backHref}
@@ -181,50 +230,97 @@ export function SettingsPage() {
               </Link>
             )}
             <Switch>
-              <Route path="/settings/dashboard" component={AccountDashboardPage} />
+              <Route
+                path="/settings/dashboard"
+                component={AccountDashboardPage}
+              />
               <Route path="/settings/posts" component={YourPostsPage} />
               <Route path="/settings/password" component={UpdatePasswordPage} />
               <Route path="/settings/id-card" component={IdCardPage} />
               <Route path="/settings/profile" component={ProfilePage} />
               <Route
                 path="/settings/volunteers"
-                component={() => (isAdmin ? <ManageVolunteersPage /> : <Redirect to="/settings" />)}
+                component={() =>
+                  isAdmin ? (
+                    <ManageVolunteersPage />
+                  ) : (
+                    <Redirect to="/settings" />
+                  )
+                }
               />
               <Route
                 path="/settings/campaigns/create"
-                component={() => (isAdmin ? <CreateCampaignPage /> : <Redirect to="/settings" />)}
+                component={() =>
+                  isAdmin ? <CreateCampaignPage /> : <Redirect to="/settings" />
+                }
               />
               <Route
                 path="/settings/campaigns/manage"
-                component={() => (isAdmin ? <ManageExistingCampaignsPage /> : <Redirect to="/settings" />)}
+                component={() =>
+                  isAdmin ? (
+                    <ManageExistingCampaignsPage />
+                  ) : (
+                    <Redirect to="/settings" />
+                  )
+                }
               />
               <Route
                 path="/settings/campaigns"
-                component={() => (isAdmin ? <CampaignAdministrationPage /> : <Redirect to="/settings" />)}
+                component={() =>
+                  isAdmin ? (
+                    <CampaignAdministrationPage />
+                  ) : (
+                    <Redirect to="/settings" />
+                  )
+                }
               />
               <Route
                 path="/settings/projects/manage"
-                component={() => (isAdmin ? <ManageProjectsPage /> : <Redirect to="/settings" />)}
+                component={() =>
+                  isAdmin ? <ManageProjectsPage /> : <Redirect to="/settings" />
+                }
               />
               <Route
                 path="/settings/messages"
-                component={() => (isAdmin ? <MessagesPage /> : <Redirect to="/settings" />)}
+                component={() =>
+                  isAdmin ? <MessagesPage /> : <Redirect to="/settings" />
+                }
               />
               <Route
                 path="/settings/members/members"
-                component={() => (isAdmin ? <ManageMemberAccountsPage accountType="members" /> : <Redirect to="/settings" />)}
+                component={() =>
+                  isAdmin ? (
+                    <ManageMemberAccountsPage accountType="members" />
+                  ) : (
+                    <Redirect to="/settings" />
+                  )
+                }
               />
               <Route
                 path="/settings/members/admins"
-                component={() => (isSuperUser ? <ManageMemberAccountsPage accountType="admins" /> : <Redirect to="/settings/members" />)}
+                component={() =>
+                  isSuperUser ? (
+                    <ManageMemberAccountsPage accountType="admins" />
+                  ) : (
+                    <Redirect to="/settings/members" />
+                  )
+                }
               />
               <Route
                 path="/settings/members"
-                component={() => (isAdmin ? <ManageMembersPage /> : <Redirect to="/settings" />)}
+                component={() =>
+                  isAdmin ? <ManageMembersPage /> : <Redirect to="/settings" />
+                }
               />
               <Route
                 path="/settings/badges"
-                component={() => (isSuperUser ? <ManageBadgesPage /> : <Redirect to="/settings" />)}
+                component={() =>
+                  isSuperUser ? (
+                    <ManageBadgesPage />
+                  ) : (
+                    <Redirect to="/settings" />
+                  )
+                }
               />
               <Route component={ProfilePage} />
             </Switch>
