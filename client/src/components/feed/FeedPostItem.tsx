@@ -196,13 +196,32 @@ export function FeedPostItem({ post }: { post: FeedPost }) {
   };
 
   // Masonry-ish grid for media
+  const renderMediaItem = (
+    media: FeedPost["media"][number],
+    className: string,
+  ) => {
+    if (media.type === "video") {
+      return (
+        <video
+          src={media.url}
+          controls
+          playsInline
+          preload="metadata"
+          className={`${className} bg-black`}
+        />
+      );
+    }
+
+    return <img src={media.url} alt="" className={className} loading="lazy" />;
+  };
+
   const renderMedia = () => {
     if (!post.media || post.media.length === 0) return null;
     
     if (post.media.length === 1) {
       return (
         <div className="mt-3 rounded-2xl overflow-hidden border bg-muted max-h-[500px]">
-          <img src={post.media[0].url} alt="" className="w-full h-full object-cover" loading="lazy" />
+          {renderMediaItem(post.media[0], "w-full h-full object-contain")}
         </div>
       );
     }
@@ -211,7 +230,9 @@ export function FeedPostItem({ post }: { post: FeedPost }) {
       return (
         <div className="mt-3 grid grid-cols-2 gap-2 rounded-2xl overflow-hidden max-h-[400px]">
           {post.media.map((m, i) => (
-            <img key={i} src={m.url} alt="" className="w-full h-full object-cover border bg-muted" loading="lazy" />
+            <div key={i} className="min-w-0 border bg-muted">
+              {renderMediaItem(m, "w-full h-full object-cover")}
+            </div>
           ))}
         </div>
       );
@@ -219,11 +240,15 @@ export function FeedPostItem({ post }: { post: FeedPost }) {
 
     return (
       <div className="mt-3 grid grid-cols-2 gap-2 rounded-2xl overflow-hidden max-h-[400px]">
-        <img src={post.media[0].url} alt="" className="w-full h-full object-cover border bg-muted row-span-2" loading="lazy" />
-        <img src={post.media[1].url} alt="" className="w-full h-full object-cover border bg-muted h-[196px]" loading="lazy" />
+        <div className="row-span-2 min-w-0 border bg-muted">
+          {renderMediaItem(post.media[0], "w-full h-full object-cover")}
+        </div>
+        <div className="h-[196px] min-w-0 border bg-muted">
+          {renderMediaItem(post.media[1], "w-full h-full object-cover")}
+        </div>
         {post.media.length > 2 && (
           <div className="relative h-[196px]">
-            <img src={post.media[2].url} alt="" className="w-full h-full object-cover border bg-muted" loading="lazy" />
+            {renderMediaItem(post.media[2], "w-full h-full object-cover border bg-muted")}
             {post.media.length > 3 && (
               <div className="absolute inset-0 bg-black/50 flex items-center justify-center text-white font-bold text-xl border">
                 +{post.media.length - 3}
