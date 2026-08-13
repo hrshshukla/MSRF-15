@@ -6,6 +6,7 @@ import { useCreateFeedPost, uploadMedia, type UploadedMedia } from "@/hooks/use-
 import { ImagePlus, X, Loader2, Smile } from "lucide-react";
 import { Link } from "wouter";
 import { UserAvatar } from "@/components/user-avatar";
+import { FeedVideo } from "./FeedVideo";
 
 interface SelectedMedia {
   id: string;
@@ -430,13 +431,9 @@ export function FeedPostComposer() {
                     }`}
                   >
                     {item.file.type.startsWith("video/") ? (
-                      <video
+                      <FeedVideo
                         src={item.previewUrl}
                         className="h-full w-full object-cover"
-                        controls
-                        muted
-                        playsInline
-                        preload="metadata"
                       />
                     ) : (
                       <img src={item.previewUrl} alt="Selected post media" className="h-full w-full object-cover" />

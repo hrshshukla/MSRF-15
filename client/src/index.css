@@ -5,6 +5,15 @@
 
 @custom-variant dark (&:is(.dark *));
 
+.feed-video-no-volume::-webkit-media-controls-volume-control-container {
+  display: none !important;
+}
+
+.feed-video-no-volume::-webkit-media-controls-mute-button {
+  display: none !important;
+}
+
+
 @theme inline {
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));

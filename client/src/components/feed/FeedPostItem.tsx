@@ -21,6 +21,7 @@ import { useToast } from "@/hooks/use-toast";
 import { UserAvatar } from "@/components/user-avatar";
 import { Link } from "wouter";
 import { formatRelativeTime, useLanguage } from "@/lib/language-context";
+import { FeedVideo } from "./FeedVideo";
 
 export function FeedPostItem({ post }: { post: FeedPost }) {
   const { isAuthenticated } = useAuth();
@@ -201,15 +202,7 @@ export function FeedPostItem({ post }: { post: FeedPost }) {
     className: string,
   ) => {
     if (media.type === "video") {
-      return (
-        <video
-          src={media.url}
-          controls
-          playsInline
-          preload="metadata"
-          className={`${className} bg-black`}
-        />
-      );
+      return <FeedVideo src={media.url} className={className} />;
     }
 
     return <img src={media.url} alt="" className={className} loading="lazy" />;
